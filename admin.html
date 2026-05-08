@@ -431,7 +431,8 @@ window.submitProduct = async function() {
     await loadProducts();
     resetForm();
   } catch(e) {
-    showToast('Erreur : ' + e.message, 'error');
+    showToast('Erreur : ' + e.code + ' — ' + e.message, 'error');
+    console.error(e);
   }
 
   btn.disabled    = false;
