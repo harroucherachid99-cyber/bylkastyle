@@ -431,8 +431,7 @@ window.submitProduct = async function() {
     await loadProducts();
     resetForm();
   } catch(e) {
-    showToast('Erreur : ' + e.code + ' — ' + e.message, 'error');
-    console.error(e);
+    showToast('Erreur : ' + e.message, 'error');
   }
 
   btn.disabled    = false;
@@ -456,19 +455,17 @@ window.confirmDelete = function(id) {
   deleteTargetId = id;
   document.getElementById('confirmOverlay').classList.add('show');
   document.getElementById('confirmYes').onclick = async () => {
+    const idToDelete = deleteTargetId;
     closeConfirm();
+    if(!idToDelete) return;
     try {
-      await deleteDoc(doc(db, 'produits', deleteTargetId));
-      showToast('Produit supprimé', 'success');
-     document.getElementById('confirmYes').onclick = async () => {
-      closeConfirm();
-      try {
-      await deleteDoc(doc(db, 'produits', deleteTargetId));
-      showToast('Produit supprimé', 'success');
-      if(document.getElementById('editId').value === deleteTargetId) resetForm();
+      await deleteDoc(doc(db, 'produits', idToDelete));
+      showToast('Produit supprimé ✓', 'success');
+      const editId = document.getElementById('editId').value;
+      if(editId && editId === idToDelete) resetForm();
       await loadProducts();
     } catch(e) {
-      showToast('Erreur : ' + e.code + ' — ' + e.message, 'error');
+      showToast('Erreur : ' + (e.message || e), 'error');
       console.error(e);
     }
   };
