@@ -463,7 +463,8 @@ window.confirmDelete = function(id) {
       if(document.getElementById('editId').value === deleteTargetId) resetForm();
       await loadProducts();
     } catch(e) {
-      showToast('Erreur suppression', 'error');
+      showToast('Erreur : ' + e.code + ' — ' + e.message, 'error');
+      console.error(e);
     }
   };
 };
