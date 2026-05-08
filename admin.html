@@ -460,6 +460,11 @@ window.confirmDelete = function(id) {
     try {
       await deleteDoc(doc(db, 'produits', deleteTargetId));
       showToast('Produit supprimé', 'success');
+     document.getElementById('confirmYes').onclick = async () => {
+      closeConfirm();
+      try {
+      await deleteDoc(doc(db, 'produits', deleteTargetId));
+      showToast('Produit supprimé', 'success');
       if(document.getElementById('editId').value === deleteTargetId) resetForm();
       await loadProducts();
     } catch(e) {
